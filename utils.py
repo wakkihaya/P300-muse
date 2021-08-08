@@ -162,7 +162,7 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
     axes[-1].legend(legend)
     sns.despine()
     plt.tight_layout()
-    plt.show()
+   # plt.show()
 
     if title:
         fig.suptitle(title, fontsize=20)

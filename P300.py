@@ -12,6 +12,11 @@ from glob import glob
 import seaborn as sns
 from matplotlib import pyplot as plt
 import utils
+from sklearn.pipeline import make_pipeline
+from pyriemann.estimation import ERPCovariances
+from pyriemann.classification import MDM
+from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit
+
 
 if __name__ == "__main__":
     subject = 1
@@ -38,3 +43,16 @@ if __name__ == "__main__":
     fig, ax = utils.plot_conditions(epochs, conditions=conditions,
                                     ci=97.5, n_boot=1000, title='',
                                     diff_waveform=(1, 2))
+
+    # Training
+    model = make_pipeline(ERPCovariances(), MDM())
+    epochs.pick_types(eeg=True)
+    X = epochs.get_data() * 1e6
+    times = epochs.times
+    y = epochs.events[:, -1]
+    cv = StratifiedShuffleSplit(n_splits=10, test_size=0.25, random_state=42)
+
+    # Cross validation
+    res = cross_val_score(model, X, y == 2,
+                          scoring='roc_auc', cv=cv, n_jobs=-1)
+    print(res)
