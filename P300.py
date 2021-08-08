@@ -19,6 +19,8 @@ from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, tra
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
+# TODO: 1. Complete to find P300 reaction from test data
+# TODO: 2. Use my brainwave connected with Muse, instead of test data.
 
 if __name__ == "__main__":
     subject = 1
@@ -69,5 +71,7 @@ if __name__ == "__main__":
     y_pred = clf.predict(X_test)
     print(accuracy_score(y_test, y_pred))
 
-    # TODO:2. Verify if model works to detect P300 data.
-    # TODO:3. Research on how to choose buttons by P300 stimuli.
+    # See: https://www.notion.so/Muse-P300-f4705969739940e6a98f3e688a720454
+    # TODO:2. Use Muse with real-time data, and detect if P300 can be caught by model.
+    # See: https://github.com/wakkihaya/Neuro_Focus_LED_app/blob/main/bci/api.py
+    # TODO: Create web applications with two buttons with stimulus. And move cursor by detecting P300.F
