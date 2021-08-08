@@ -35,7 +35,6 @@ if __name__ == "__main__":
     conditions['Non-target'] = [1]
     conditions['Target'] = [2]
 
-    # //TODO: not showing plot
     fig, ax = utils.plot_conditions(epochs, conditions=conditions,
                                     ci=97.5, n_boot=1000, title='',
                                     diff_waveform=(1, 2))
