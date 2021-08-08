@@ -15,7 +15,9 @@ import utils
 from sklearn.pipeline import make_pipeline
 from pyriemann.estimation import ERPCovariances
 from pyriemann.classification import MDM
-from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit
+from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
 
 
 if __name__ == "__main__":
@@ -30,6 +32,7 @@ if __name__ == "__main__":
     raw.filter(1, 30, method='iir')    # Filter by 30 Hz
 
     events = find_events(raw)
+    # Events include the labels -> 1: Not-P300, 2: P300.
     event_id = {'Non-Target': 1, 'Target': 2}
 
     epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,
@@ -44,15 +47,27 @@ if __name__ == "__main__":
                                     ci=97.5, n_boot=1000, title='',
                                     diff_waveform=(1, 2))
 
-    # Training
-    model = make_pipeline(ERPCovariances(), MDM())
+    # Cross-validation (Using ERPCovariances, MDM)
+    clf = make_pipeline(ERPCovariances(), MDM())
     epochs.pick_types(eeg=True)
-    X = epochs.get_data() * 1e6
+    X = epochs.get_data() * 1e6  # (194, 4, 232)
+    X = X.reshape(X.shape[0], -1)  # Convert to 2D (194, ~)
     times = epochs.times
-    y = epochs.events[:, -1]
+    y = epochs.events[:, -1]  # (194,)
+
     cv = StratifiedShuffleSplit(n_splits=10, test_size=0.25, random_state=42)
 
     # Cross validation
-    res = cross_val_score(model, X, y == 2,
+    res = cross_val_score(clf, X, y == 2,
                           scoring='roc_auc', cv=cv, n_jobs=-1)
-    print(res)
+
+    # Make SVM model for specifying if P300 or Non-P300
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    clf = svm.SVC()
+    clf.fit(X_train, y_train)
+
+    y_pred = clf.predict(X_test)
+    print(accuracy_score(y_test, y_pred))
+
+    # TODO:2. Verify if model works to detect P300 data.
+    # TODO:3. Research on how to choose buttons by P300 stimuli.
