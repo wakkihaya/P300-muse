@@ -12,7 +12,6 @@ from glob import glob
 import seaborn as sns
 from matplotlib import pyplot as plt
 import utils
-import stream_muse
 from sklearn.pipeline import make_pipeline
 from pyriemann.estimation import ERPCovariances
 from pyriemann.classification import MDM
@@ -26,12 +25,12 @@ from sklearn.metrics import accuracy_score
 if __name__ == "__main__":
     subject = 1
     # Read raw data from sample data
-    raw = utils.load_data('p300', sfreq=256.,
-                          subject_nb=subject,
-                          ch_ind=[0, 1, 2, 3])
+    # raw = utils.load_data('p300', sfreq=256.,
+    #                       subject_nb=subject,
+    #                       ch_ind=[0, 1, 2, 3])
 
     # Read raw data from muse device
-    # raw = stream_muse.connect_to_eeg_stream()
+    raw = utils.connect_to_eeg_stream()
 
     raw.plot_psd(tmax=np.inf)
 
