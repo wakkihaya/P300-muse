@@ -61,7 +61,7 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
             sessions.
         sfreq (float): EEG sampling frequency
         ch_ind (list): indices of the EEG channels to keep
-        stim_ind (int): index of the stim channel
+        stim_ind (int): index of the stim channel (marker)
         replace_ch_names (dict or None): dictionary containing a mapping to
             rename channels. Useful when an external electrode was used.
     Returns:
@@ -71,10 +71,10 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
 
     raw = []
 
-    # read the file
+    # read the file [channels(4), aux, marker]
     data = pd.read_csv(filepath, index_col=0)
 
-    # name of each channels
+    # name of each channels [channels, stim]
     ch_names = list(data.columns)[0:n_channel] + ['Stim']
 
     if replace_ch_names is not None:
@@ -84,19 +84,14 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
     # type of each channels
     ch_types = ['eeg'] * n_channel + ['stim']
 
-    # get data and exclude Aux channel
+    # get data and exclude Aux channel [{num of data}, 5]
     data = data.values[:, ch_ind + [stim_ind]].T
-
     # convert in Volts (from uVolts)
     data[:-1] *= 1e-6
 
     # create MNE object
     info = create_info(ch_names=ch_names, ch_types=ch_types,
                        sfreq=sfreq)
-    print('data')
-    print(data)
-    print('info')
-    print(info)
     raw.append(RawArray(data=data, info=info))
 
     # concatenate all raw objects
@@ -106,27 +101,28 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
 
 
 # Load data from streaming
-def stream_data(eeg_data, timestamps, ch_names, ch_ind,):
+def stream_data(eeg_data, ch_names, ch_ind,):
 
-    subject_nb = 1
     sfreq = 256
-    stim_ind = 5
-    replace_ch_names = None
 
     n_channel = len(ch_ind)
     raw = []
     ch_types = ['eeg'] * n_channel + ['stim']
+    ch_names = ch_names[0:n_channel] + ['stim']
 
     # create MNE object
     info = create_info(ch_names=ch_names, ch_types=ch_types,
                        sfreq=sfreq)
 
 # TODO: set label with visual stimuli during measuring.
-    testMarker = np.zeros(len(timestamps))
-    # [timestamp, index_channel, marker]
-    data = np.concatenate(np.array(timestamps), eeg_data, testMarker)
-    # TODO: Maybe because timestamps is list type, CAN'T concatentate
-    print(data)
+    testMarker = np.zeros(eeg_data.shape[0])  # stim = marker
+    testMarker[20, ] = 1
+    testMarker[50, ] = 1
+    # TODO: Resolve `ValueError: No matching events found for Target (event id 2)` -> Set label with visual stimuli
+
+    # [{num of data},[index_channel + marker]]
+    data = np.column_stack([eeg_data, testMarker])
+    data = data.T
     raw.append(RawArray(data=data, info=info))
     return concatenate_raws(raw)
 
@@ -239,7 +235,7 @@ def connect_to_eeg_stream():
     # [[{TP9}, {AF7}, {AF8}, {TP10}]]
     eeg_data = np.array(eeg_data)[:, index_channel]
     print('Finish collecting')
-    raw_data = stream_data(eeg_data, timestamps,
+    raw_data = stream_data(eeg_data,
                            ch_names=ch_names, ch_ind=index_channel)
 
     return raw_data

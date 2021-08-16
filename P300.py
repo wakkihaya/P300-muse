@@ -19,7 +19,6 @@ from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, tra
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-# TODO: 1. Complete to find P300 reaction from test data
 # TODO: 2. Use my brainwave connected with Muse, instead of test data.
 
 if __name__ == "__main__":
