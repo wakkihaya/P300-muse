@@ -39,6 +39,7 @@ if __name__ == "__main__":
     # Events include the labels -> 1: Not-P300, 2: P300.
     event_id = {'Non-Target': 1, 'Target': 2}
 
+    print(events)
     epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,
                     reject={'eeg': 100e-6}, preload=True, verbose=False, picks=[0, 1, 2, 3])
 

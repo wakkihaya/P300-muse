@@ -115,9 +115,10 @@ def stream_data(eeg_data, ch_names, ch_ind,):
                        sfreq=sfreq)
 
 # TODO: set label with visual stimuli during measuring.
-    testMarker = np.zeros(eeg_data.shape[0])  # stim = marker
+    testMarker = np.zeros(eeg_data.shape[0], dtype=int)  # stim = marker
     testMarker[20, ] = 1
     testMarker[50, ] = 1
+    print(testMarker)
     # TODO: Resolve `ValueError: No matching events found for Target (event id 2)` -> Set label with visual stimuli
 
     # [{num of data},[index_channel + marker]]
