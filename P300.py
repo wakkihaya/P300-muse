@@ -19,7 +19,9 @@ from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, tra
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-# TODO: 2. Use my brainwave connected with Muse, instead of test data.
+# TODO: 1. Integrate Visual P300 event id into the data. Maybe in muse-lsl.
+# See: https://github.com/NeuroTechX/eeg-notebooks/tree/master/examples/visual_p300
+# TODO: 2. Apply those label (Nontarget: 1, Target:2) to ML(utils.py).
 
 if __name__ == "__main__":
     subject = 1
@@ -37,7 +39,7 @@ if __name__ == "__main__":
 
     events = find_events(raw)
     # Events include the labels -> 1: Not-P300, 2: P300.
-    event_id = {'Non-Target': 1, 'Target': 2}
+    event_id = {'Target': 1, 'Target': 2}
 
     print(events)
     epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,

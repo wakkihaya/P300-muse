@@ -114,16 +114,19 @@ def stream_data(eeg_data, ch_names, ch_ind,):
     info = create_info(ch_names=ch_names, ch_types=ch_types,
                        sfreq=sfreq)
 
-# TODO: set label with visual stimuli during measuring.
-    testMarker = np.zeros(eeg_data.shape[0], dtype=int)  # stim = marker
-    testMarker[20, ] = 1
-    testMarker[50, ] = 1
-    print(testMarker)
-    # TODO: Resolve `ValueError: No matching events found for Target (event id 2)` -> Set label with visual stimuli
+    # OddBall high prob(Non-target) -> Event id: 1. low prob(Target) -> Event id:2.
+# TODO: set label with visual stimuli during measuring. Oddball; Non-target or Target
+    testMarker = np.ones(eeg_data.shape[0], dtype=int)  # stim = marker
+    testMarker[20] = 2
+    testMarker[50] = 2
+    testMarker[100] = 1
+    testMarker[200] = 1
 
     # [{num of data},[index_channel + marker]]
     data = np.column_stack([eeg_data, testMarker])
     data = data.T
+    data[:-1] *= 1e-6
+    print(data.shape)
     raw.append(RawArray(data=data, info=info))
     return concatenate_raws(raw)
 
