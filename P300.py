@@ -74,8 +74,3 @@ if __name__ == "__main__":
 
     y_pred = clf.predict(X_test)
     print(accuracy_score(y_test, y_pred))
-
-    # See: https://www.notion.so/Muse-P300-f4705969739940e6a98f3e688a720454
-    # TODO:2. Use Muse with real-time data, and detect if P300 can be caught by model.
-    # See: https://github.com/wakkihaya/Neuro_Focus_LED_app/blob/main/bci/api.py
-    # TODO: Create web applications with two buttons with stimulus. And move cursor by detecting P300.F
