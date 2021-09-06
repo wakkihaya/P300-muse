@@ -3,7 +3,6 @@
 # Space: start, pause.
 # Target: [2], Non-target: [1], Nothing: [0]
 # See: https://github.com/yagijin/Oddball_P300
-# TODO: GUI is freezing when seeing console.
 # TODO: Send data of EEG from Muse at the same time.
 
 import sys
@@ -15,9 +14,9 @@ from PyQt5.QtWidgets import QApplication,  QWidget
 from PyQt5.QtGui import QPainter,  QPixmap
 from PyQt5.QtCore import Qt, QTimer
 
-
-printsec = 0.2  # Time for printing 1 stimulus
-sumOfStimulus = 20
+frameRate = 10  # timer's framerate
+printsec = 1  # Time for printing 1 stimulus
+sumOfStimulus = 10
 ratioOfTarget = 0.2
 targetPic = "stimulus/blue.png"  # Target
 nonTargetPic = "stimulus/red.png"  # Non-target
@@ -104,6 +103,7 @@ class MainWindow(QWidget):
                 self.timer.stop()
             else:
                 self.stim.resetTimer()
+                self.timer.start(frameRate)
 
     def paintEvent(self, QPaintEvent):
         curr_time = pc()
@@ -114,7 +114,7 @@ class MainWindow(QWidget):
             self.stim.draw(curr_time)
             stimu = [int(self.stim.on)]
             self.outlet.push_sample(stimu)
-            print(stimu)
+            print("Stim ", stimu)
 
 
 if __name__ == '__main__':
