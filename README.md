@@ -4,8 +4,8 @@ Get P300 data using Muse
 ## Run
 1. Connect with your Muse device
 
-  `python muse-lsl.py`
+  `python visual-p300.py`
 
-2. See your brainwave
+2. Process your realtime data
 
-  `python lsl-viewer.py`
+  `python P300.py`

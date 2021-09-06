@@ -19,8 +19,7 @@ from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, tra
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-# TODO: 1. Integrate Visual P300 event id into the data. Maybe in muse-lsl. How to get event while recording?
-# See: https://github.com/NeuroTechX/eeg-notebooks/tree/master/examples/visual_p300
+# TODO: 1. Integrate Visual P300 event id into the data in visual-p300.py.
 # TODO: 2. Apply those label (Nontarget: 1, Target:2) to ML(utils.py).
 
 if __name__ == "__main__":
