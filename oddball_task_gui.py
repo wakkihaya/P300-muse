@@ -32,7 +32,7 @@ def present(duration=120, eeg=None, save_fn=None):
 
     # Setup graphics
     mywin = visual.Window(
-        [1600, 900], monitor="testMonitor", units="deg", fullscr=True)
+        [600, 400], monitor="testMonitor", units="deg", fullscr=False)
 
     targets = list(map(load_image, glob(
         os.path.join(CAT_DOG, "target-*.jpg"))))
@@ -42,7 +42,6 @@ def present(duration=120, eeg=None, save_fn=None):
 
     # Show instructions
     show_instructions(duration=duration)
-
     # start the EEG stream, will delay 5 seconds to let signal settle
     if eeg:
         if save_fn is None:  # If no save_fn passed, generate a new unnamed save file
@@ -52,6 +51,7 @@ def present(duration=120, eeg=None, save_fn=None):
                 f"No path for a save file was passed to the experiment. Saving data to {save_fn}"
             )
         eeg.start(save_fn, duration=record_duration)
+        print('here')
 
     # Iterate through the events
     start = time()
