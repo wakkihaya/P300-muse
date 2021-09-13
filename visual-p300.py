@@ -7,7 +7,7 @@ import oddball_task_gui
 
 
 # Define some variables
-board_name = "muse"
+board_name = "muse2"
 experiment = "visual_p300"
 subject_id = 0
 session_nb = 1
@@ -19,11 +19,10 @@ eeg_device = EEG(device=board_name)
 save_fn = generate_save_fn(board_name, experiment, subject_id, session_nb)
 print(save_fn)
 
-eeg_device.start(save_fn, duration=record_duration)
-# oddball_task_gui.present(duration=record_duration,
-#                         eeg=eeg_device, save_fn=save_fn)
+oddball_task_gui.present(duration=record_duration,
+                        eeg=eeg_device, save_fn=save_fn)
 
-# TODO: Muse not connected. => Implement the function
+# TODO: Couldn't find any stream even after showing window.
 
 #TODO: Confirm
 #1. Save data with 5 channels data and markers. like subject1.csv
