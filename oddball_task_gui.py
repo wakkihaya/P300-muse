@@ -55,6 +55,8 @@ def present(duration=120, eeg=None, save_fn=None):
 
     # Iterate through the events
     start = time()
+    print('here2')
+
     for ii, trial in trials.iterrows():
         # Inter trial interval
         core.wait(iti + np.random.rand() * jitter)
