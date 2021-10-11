@@ -22,8 +22,7 @@ save_fn = generate_save_fn(board_name, experiment, subject_id, session_nb)
 oddball_task_gui.present(duration=record_duration,
                          eeg=eeg_device, save_fn=save_fn)
 
-# TODO: Loop initiation EEG.py
 
-#TODO: Confirm
-# 1. Save data with 5 channels data and markers. like subject1.csv
-# 2. Output information by `python P300.py`
+#TODO:
+# Add marker column name.
+# Machine learning realtime data by `python P300.py`

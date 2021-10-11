@@ -16,7 +16,7 @@ __title__ = "Visual P300"
 # TODO: Use different pictures. (Blue and Red)
 
 
-def present(duration=120, eeg=None, save_fn=None):
+def present(duration, eeg=None, save_fn=None):
     n_trials = 2010
     iti = 0.4
     soa = 0.3
