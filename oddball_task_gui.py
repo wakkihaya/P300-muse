@@ -13,7 +13,9 @@ from eegnb.stimuli import CAT_DOG
 
 __title__ = "Visual P300"
 
-#TODO: Use different pictures. (Blue and Red)
+# TODO: Use different pictures. (Blue and Red)
+
+
 def present(duration=120, eeg=None, save_fn=None):
     n_trials = 2010
     iti = 0.4
@@ -21,6 +23,7 @@ def present(duration=120, eeg=None, save_fn=None):
     jitter = 0.2
     record_duration = np.float32(duration)
     markernames = [1, 2]
+    hasShownInstruction = False
 
     # Setup trial list
     image_type = np.random.binomial(1, 0.5, n_trials)
@@ -41,7 +44,9 @@ def present(duration=120, eeg=None, save_fn=None):
     stim = [nontargets, targets]
 
     # Show instructions
-    show_instructions(duration=duration)
+    if not hasShownInstruction:
+        show_instructions(duration=duration)
+    hasShownInstruction = True
     # start the EEG stream, will delay 5 seconds to let signal settle
     if eeg:
         if save_fn is None:  # If no save_fn passed, generate a new unnamed save file
@@ -51,11 +56,9 @@ def present(duration=120, eeg=None, save_fn=None):
                 f"No path for a save file was passed to the experiment. Saving data to {save_fn}"
             )
         eeg.start(save_fn, duration=record_duration)
-        print('here')
 
     # Iterate through the events
     start = time()
-    print('here2')
 
     for ii, trial in trials.iterrows():
         # Inter trial interval
@@ -102,7 +105,7 @@ def show_instructions(duration):
 
     # graphics
     mywin = visual.Window(
-        [1600, 900], monitor="testMonitor", units="deg", fullscr=True)
+        [1300, 600], monitor="testMonitor", units="deg", fullscr=False)
 
     mywin.mouseVisible = False
 

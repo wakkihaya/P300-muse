@@ -9,7 +9,7 @@ import sys
 import time
 import logging
 from time import sleep
-from multiprocessing import Process
+from multiprocess import Process
 
 import numpy as np
 import pandas as pd
