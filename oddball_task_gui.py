@@ -23,7 +23,6 @@ def present(duration=120, eeg=None, save_fn=None):
     jitter = 0.2
     record_duration = np.float32(duration)
     markernames = [1, 2]
-    hasShownInstruction = False
 
     # Setup trial list
     image_type = np.random.binomial(1, 0.5, n_trials)
@@ -44,9 +43,7 @@ def present(duration=120, eeg=None, save_fn=None):
     stim = [nontargets, targets]
 
     # Show instructions
-    if not hasShownInstruction:
-        show_instructions(duration=duration)
-    hasShownInstruction = True
+    show_instructions(duration=duration)
     # start the EEG stream, will delay 5 seconds to let signal settle
     if eeg:
         if save_fn is None:  # If no save_fn passed, generate a new unnamed save file
