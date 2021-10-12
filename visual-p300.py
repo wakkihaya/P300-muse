@@ -24,5 +24,4 @@ oddball_task_gui.present(duration=record_duration,
 
 
 #TODO:
-# Add marker column name.
 # Machine learning realtime data by `python P300.py`
