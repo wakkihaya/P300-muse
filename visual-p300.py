@@ -2,8 +2,8 @@
 # See: https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_p300/00x__p300_run_experiment.html?highlight=muse
 
 from EEG import EEG
-from eegnb import generate_save_fn
 import oddball_task_gui
+import pathlib
 
 
 # Define some variables
@@ -16,12 +16,12 @@ record_duration = 20
 eeg_device = EEG(device=board_name)
 
 # Create save file name
-save_fn = generate_save_fn(board_name, experiment, subject_id, session_nb)
-# print(save_fn)
+filePath = "./data/subject_{}/session_{}"
+save_fn = pathlib.Path(filePath.format(subject_id, session_nb))
 
 oddball_task_gui.present(duration=record_duration,
                          eeg=eeg_device, save_fn=save_fn)
 
 
-#TODO:
+# TODO:
 # Machine learning realtime data by `python P300.py`
