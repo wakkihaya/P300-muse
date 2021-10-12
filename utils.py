@@ -19,7 +19,7 @@ sns.set_style('white')
 
 
 # Load data from sample data
-def load_data(data_dir, subject_nb=1, sfreq=256.,
+def load_data(subject_nb, sfreq=256., session_nb=1,
               ch_ind=[0, 1, 2, 3], stim_ind=5, replace_ch_names=None):
     """Load CSV files from the /data directory into a Raw object.
     Args:
@@ -42,8 +42,8 @@ def load_data(data_dir, subject_nb=1, sfreq=256.,
         subject_nb = '*'
 
     data_path = os.path.join(
-        './data/', data_dir,
-        'subject{}.csv'.format(subject_nb))
+        './data/',
+        'subject_{}/session_{}.csv'.format(subject_nb, session_nb))
     return load_muse_csv_as_raw(data_path, sfreq=sfreq, ch_ind=ch_ind,
                                 stim_ind=stim_ind,
                                 replace_ch_names=replace_ch_names)
@@ -73,9 +73,11 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
 
     # read the file [channels(4), aux, marker]
     data = pd.read_csv(filepath, index_col=0)
-
+    print(data.columns)
     # name of each channels [channels, stim]
     ch_names = list(data.columns)[0:n_channel] + ['Stim']
+    print(ch_names)
+
 
     if replace_ch_names is not None:
         ch_names = [c if c not in replace_ch_names.keys()

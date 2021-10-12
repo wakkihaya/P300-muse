@@ -16,7 +16,7 @@ record_duration = 20
 eeg_device = EEG(device=board_name)
 
 # Create save file name
-filePath = "./data/subject_{}/session_{}"
+filePath = "./data/subject_{}/session_{}.csv"
 save_fn = pathlib.Path(filePath.format(subject_id, session_nb))
 
 oddball_task_gui.present(duration=record_duration,

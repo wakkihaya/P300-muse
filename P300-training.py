@@ -23,14 +23,15 @@ from sklearn.metrics import accuracy_score
 # TODO: 2. Apply those label (Nontarget: 1, Target:2) to ML(utils.py).
 
 if __name__ == "__main__":
-    subject = 1
-    # Read raw data from sample data
-    # raw = utils.load_data('p300', sfreq=256.,
-    #                       subject_nb=subject,
-    #                       ch_ind=[0, 1, 2, 3])
+    subject = 0
+    session = 1
+    # Read raw data from data set
+    raw = utils.load_data(sfreq=256.,
+                          subject_nb=subject, session_nb=session,
+                          ch_ind=[0, 1, 2, 3])
 
     # Read raw data from muse device
-    raw = utils.connect_to_eeg_stream()
+    # raw = utils.connect_to_eeg_stream()
 
     raw.plot_psd(tmax=np.inf)
 
