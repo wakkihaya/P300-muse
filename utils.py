@@ -117,7 +117,6 @@ def stream_data(eeg_data, ch_names, ch_ind,):
                        sfreq=sfreq)
 
     # OddBall high prob(Non-target) -> Event id: 1. low prob(Target) -> Event id:2.
-# TODO: set label with visual stimuli during measuring. Oddball; Non-target or Target
     testMarker = np.ones(eeg_data.shape[0], dtype=int)  # stim = marker
     testMarker[20] = 2
     testMarker[50] = 2
@@ -173,7 +172,7 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
 
     for ch in range(4):
         for cond, color in zip(conditions.values(), palette):
-            sns.tsplot(X[y.isin(cond), ch], time=times, color=color,
+            sns.tsplot(data=X[y.isin(cond), ch], time=times, color=color,
                        n_boot=n_boot, ci=ci, ax=axes[ch])
 
         if diff_waveform:
