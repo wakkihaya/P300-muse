@@ -78,7 +78,6 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
     ch_names = list(data.columns)[0:n_channel] + ['Stim']
     print(ch_names)
 
-
     if replace_ch_names is not None:
         ch_names = [c if c not in replace_ch_names.keys()
                     else replace_ch_names[c] for c in ch_names]
@@ -95,7 +94,6 @@ def load_muse_csv_as_raw(filepath, sfreq=256., ch_ind=[0, 1, 2, 3],
     info = create_info(ch_names=ch_names, ch_types=ch_types,
                        sfreq=sfreq)
     raw.append(RawArray(data=data, info=info))
-
     # concatenate all raw objects
     raws = concatenate_raws(raw)
 

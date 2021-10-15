@@ -24,5 +24,6 @@ oddball_task_gui.present(duration=record_duration,
 
 
 # TODO:
+# use different pic
 # sns.tsplot Invalid input data for tsplot
 # Machine learning realtime data by `python P300.py`
