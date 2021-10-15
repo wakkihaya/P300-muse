@@ -176,6 +176,7 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
         if diff_waveform:
             diff = (np.nanmean(X[y == diff_waveform[1], ch], axis=0) -
                     np.nanmean(X[y == diff_waveform[0], ch], axis=0))
+            # Difference between Targets and Non-Targets.
             axes[ch].plot(times, diff, color='k', lw=1)
 
         axes[ch].set_title(epochs.ch_names[ch])
@@ -193,10 +194,11 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
                   list(conditions.keys()))
     else:
         legend = conditions.keys()
+
     axes[-1].legend(legend)
     sns.despine()
     plt.tight_layout()
-   # plt.show()
+    plt.show()
 
     if title:
         fig.suptitle(title, fontsize=20)
