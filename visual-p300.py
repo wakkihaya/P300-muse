@@ -24,5 +24,5 @@ oddball_task_gui.present(duration=record_duration,
 
 
 # TODO:
-# use different pic
-# Machine learning realtime data by `python P300.py`
+# 1. use different pic
+# 2. get the data with correct epochs.
