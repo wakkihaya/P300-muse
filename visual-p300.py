@@ -10,7 +10,7 @@ import pathlib
 board_name = "muse2"
 experiment = "visual_p300"
 subject_id = 0
-session_nb = 0 # session_0 is sample data gotten from online.
+session_nb = 2 # session_0 is sample data gotten from online.
 record_duration = 20
 
 eeg_device = EEG(device=board_name)
@@ -24,5 +24,4 @@ oddball_task_gui.present(duration=record_duration,
 
 
 # TODO:
-# 1. use different pic
-# 2. get the data with correct epochs.
+# 1. get the data with correct epochs. Data in experiment has no epochs.

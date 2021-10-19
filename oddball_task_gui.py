@@ -23,24 +23,28 @@ def present(duration, eeg=None, save_fn=None):
     jitter = 0.2
     record_duration = np.float32(duration)
     markernames = [1, 2]
+    target_img_percent = 0.1
+
+    non_target_marker_list = np.zeros(int(n_trials* (1.0 - target_img_percent)))
+    target_marker_list = np.ones(int(n_trials * target_img_percent))
+    image_type_list = np.concatenate([non_target_marker_list, target_marker_list])
+    np.random.shuffle(image_type_list)
 
     # Setup trial list
-    image_type = np.random.binomial(1, 0.5, n_trials)
     trials = DataFrame(
-        dict(image_type=image_type, timestamp=np.zeros(n_trials)))
+        dict(image_type=image_type_list, timestamp=np.zeros(n_trials)))
 
-    def load_image(fn):
-        return visual.ImageStim(win=mywin, image=fn)
+    def load_image(imagePath):
+        return visual.ImageStim(win=mywin, image=imagePath)
 
     # Setup graphics
     mywin = visual.Window(
         [600, 400], monitor="testMonitor", units="deg", fullscr=False)
 
-    targets = list(map(load_image, glob(
-        os.path.join(CAT_DOG, "target-*.jpg"))))
-    nontargets = list(map(load_image, glob(
-        os.path.join(CAT_DOG, "nontarget-*.jpg"))))
-    stim = [nontargets, targets]
+    target = load_image(
+        os.path.join(".", "stimulus/red.png"))
+    nontarget = load_image(
+        os.path.join(".", "stimulus/blue.png"))
 
     # Show instructions
     show_instructions(duration=duration)
@@ -62,9 +66,11 @@ def present(duration, eeg=None, save_fn=None):
         core.wait(iti + np.random.rand() * jitter)
 
         # Select and display image
-        label = trials["image_type"].iloc[ii]
-        image = choice(targets if label == 1 else nontargets)
-        image.draw()
+        label = int(trials["image_type"].iloc[ii])
+        if label == 1:
+            target.draw()
+        else:
+            nontarget.draw()
 
         # Push sample
         if eeg:
@@ -94,6 +100,8 @@ def show_instructions(duration):
     Welcome to the P300 experiment!
 
     Stay still, focus on the centre of the screen, and try not to blink.
+    Try to count the red image.
+
     This block will run for %s seconds.
     Press spacebar to continue.
 
