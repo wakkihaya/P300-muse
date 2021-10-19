@@ -75,6 +75,3 @@ if __name__ == "__main__":
 
         y_pred = clf.predict(X_test)
         print(accuracy_score(y_test, y_pred))
-
-#TODO: 1. utils.py > tsplot の2D arrayの謎を解き明かす
-#TODO: 2. Fillter : 30Hz??

@@ -171,10 +171,7 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
     # Plot data around epochs for each channel, segmented by Non-target or Target.
     for ch in range(4):
         for cond, color in zip(conditions.values(), palette):
-            print(cond)
-            print(X.shape)
-            print((X[y.isin(cond), ch]).shape)
-            # TODO: Display what? Which epoch? data is 2D array in this case. What happened?
+            # Multiple epochs are covered in the following figure by bootstrap confidence interval.
             sns.tsplot(data=X[y.isin(cond), ch], time=times, color=color,
                        n_boot=n_boot, ci=ci, ax=axes[ch])
 
