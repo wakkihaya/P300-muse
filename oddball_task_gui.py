@@ -100,6 +100,8 @@ def show_instructions(duration):
     Welcome to the P300 experiment!
 
     Stay still, focus on the centre of the screen, and try not to blink.
+    Try to count the red image.
+
     This block will run for %s seconds.
     Press spacebar to continue.
 
