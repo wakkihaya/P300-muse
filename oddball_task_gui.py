@@ -13,8 +13,6 @@ from eegnb.stimuli import CAT_DOG
 
 __title__ = "Visual P300"
 
-# TODO: Use different pictures. (Blue and Red)
-
 
 def present(duration, eeg=None, save_fn=None):
     n_trials = 2010
@@ -25,9 +23,11 @@ def present(duration, eeg=None, save_fn=None):
     markernames = [1, 2]
     target_img_percent = 0.1
 
-    non_target_marker_list = np.zeros(int(n_trials* (1.0 - target_img_percent)))
+    non_target_marker_list = np.zeros(
+        int(n_trials * (1.0 - target_img_percent)))
     target_marker_list = np.ones(int(n_trials * target_img_percent))
-    image_type_list = np.concatenate([non_target_marker_list, target_marker_list])
+    image_type_list = np.concatenate(
+        [non_target_marker_list, target_marker_list])
     np.random.shuffle(image_type_list)
 
     # Setup trial list

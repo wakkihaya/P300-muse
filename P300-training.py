@@ -21,7 +21,7 @@ from sklearn.metrics import accuracy_score
 
 if __name__ == "__main__":
     subject = 0
-    session = 0
+    session = 2
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # Read raw data from muse device
     # raw = utils.connect_to_eeg_stream()
 
-   # raw.plot_psd(tmax=np.inf)  # X: Frequency, Y: デシベル(dB)
+    raw.plot_psd(tmax=np.inf)  # X: Frequency, Y: デシベル(dB)
 
     raw.filter(1, 30, method='iir')    # Filter by 30 Hz
 
@@ -38,9 +38,11 @@ if __name__ == "__main__":
     # Events include the labels -> 1: Not-P300, 2: P300.
     event_id = {'Non-Target': 1, 'Target': 2}
 
-    epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,
-                    reject={'eeg': 100e-6}, preload=True, verbose=False, picks=[0, 1, 2, 3])
+    print(events)
 
+    epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,
+                    reject={'eeg': 100e-6}, preload=False, verbose=False, picks=[0, 1, 2, 3])
+    #TODO: epochs are bad -> No epochs. See: https://mne.discourse.group/t/epoch-classifies-all-epochs-as-bad/1535
     if epochs.events.size == 0:
         print('No epochs')
     else:
