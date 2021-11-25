@@ -21,7 +21,7 @@ from sklearn.metrics import accuracy_score
 
 if __name__ == "__main__":
     subject = 0
-    session = 2
+    session = 3
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
