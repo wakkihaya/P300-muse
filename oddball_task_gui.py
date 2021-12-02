@@ -42,9 +42,9 @@ def present(duration, eeg=None, save_fn=None):
         [600, 400], monitor="testMonitor", units="deg", fullscr=False)
 
     target = load_image(
-        os.path.join(".", "stimulus/red.png"))
+        os.path.join(".", "stimulus/scared.jpeg"))
     nontarget = load_image(
-        os.path.join(".", "stimulus/blue.png"))
+        os.path.join(".", "stimulus/sky.jpeg"))
 
     # Show instructions
     show_instructions(duration=duration)
