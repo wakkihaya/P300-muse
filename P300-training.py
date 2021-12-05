@@ -46,6 +46,9 @@ if __name__ == "__main__":
     if epochs.events.size == 0:
         print('No epochs')
     else:
+        # Show Epocs plot with events.
+        epochs.plot(events=events)
+
         # Epoch average
         conditions = OrderedDict()
         conditions['Non-target'] = [1]
