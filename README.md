@@ -8,7 +8,7 @@ Get P300 data using Muse
 
 2. Modify created CSV
 
-As a known bug, the created CSV file doesn't have column name `Marker` somehow. So, add the `Marker` column name to the CSV file.
+As a known bug, the created CSV file doesn't have column name `Marker` somehow. So, add the `Marker` column name to the CSV file, and remove a few sentences that don't include markers.
 
 3. Process your realtime data
 

@@ -23,6 +23,4 @@ oddball_task_gui.present(duration=record_duration,
                          eeg=eeg_device, save_fn=save_fn)
 
 
-# TODO:
-# 1. Somehow, the connection stopped in the middle.
-# 2. get the data with correct epochs. Data in experiment has no epochs.
+# TODO: Show the brain waves around target stimulation.
