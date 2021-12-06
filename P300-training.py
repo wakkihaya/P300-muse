@@ -1,7 +1,7 @@
 import sys
 from collections import OrderedDict
 
-from mne import create_info, concatenate_raws, Epochs, find_events
+from mne import create_info, concatenate_raws, Epochs, find_events, EvokedArray
 from mne.io import RawArray
 from mne.channels import read_custom_montage
 
@@ -19,9 +19,14 @@ from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, tra
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
+# TODO: 1. Calculate the amplitude
+# TODO: 2. Calculate the latenvy
+# TODO: 3. Refactor code: divide files.
+# TODO: 3. Compare the experiment between normal and scare.
+
 if __name__ == "__main__":
     subject = 0
-    session = 5
+    session = 0
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
@@ -53,6 +58,13 @@ if __name__ == "__main__":
         conditions = OrderedDict()
         conditions['Non-target'] = [1]
         conditions['Target'] = [2]
+
+        # See: https://mne.tools/stable/auto_tutorials/evoked/30_eeg_erp.html?highlight=amplitude#amplitude-and-latency-measures
+        evArray = EvokedArray(epochs.get_data())  # TODO: Error
+        good_tmin, good_tmax = .3, .4
+        ch, lat, amp = evArray.get_peak(
+            ch_type='eeg', tmin=good_tmin, tmax=good_tmax, mode='pos', return_amplitude=True)
+        print(f'Peak Amplitude: {amp * 1e6:.3f} uV')
 
         fig, ax = utils.plot_conditions(epochs, conditions=conditions,
                                         ci=97.5, n_boot=1000, title='',
