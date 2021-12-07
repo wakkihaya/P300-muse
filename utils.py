@@ -179,8 +179,6 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
     for ch in range(4):
         for cond, color in zip(conditions.values(), palette):
             # Multiple epochs are covered in the following figure by bootstrap confidence interval.
-            print(X)  # It's empty
-
             sns.tsplot(data=X[y.isin(cond), ch], time=times, color=color,
                        n_boot=n_boot, ci=ci, ax=axes[ch])
 

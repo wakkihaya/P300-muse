@@ -15,7 +15,7 @@ import utils
 
 if __name__ == "__main__":
     subject = 0
-    session = 0
+    session = 5
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
