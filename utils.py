@@ -13,6 +13,13 @@ import numpy as np  # Module that simplifies computations on matrices
 from pylsl import StreamInlet, resolve_byprop  # Module to receive EEG data
 import serial
 import time
+from sklearn.pipeline import make_pipeline
+from pyriemann.estimation import ERPCovariances
+from pyriemann.classification import MDM
+from sklearn.model_selection import cross_val_score, StratifiedShuffleSplit, train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+
 
 sns.set_context('talk')
 sns.set_style('white')
@@ -172,7 +179,7 @@ def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
     for ch in range(4):
         for cond, color in zip(conditions.values(), palette):
             # Multiple epochs are covered in the following figure by bootstrap confidence interval.
-            print(X) #It's empty
+            print(X)  # It's empty
 
             sns.tsplot(data=X[y.isin(cond), ch], time=times, color=color,
                        n_boot=n_boot, ci=ci, ax=axes[ch])
@@ -248,3 +255,40 @@ def connect_to_eeg_stream():
                            ch_names=ch_names, ch_ind=index_channel)
 
     return raw_data
+
+ # See: https://mne.tools/stable/auto_tutorials/evoked/30_eeg_erp.html?highlight=amplitude#amplitude-and-latency-measures
+
+
+def calculate_amp_and_lat_at_peak(epochs):
+    good_tmin, good_tmax = .3, .4
+    ch, lat, amp = epochs.average().get_peak(
+        ch_type='eeg', tmin=good_tmin, tmax=good_tmax, mode='pos', return_amplitude=True)
+    print(f'Peak Amplitude: {amp } uV')
+    print(f'Latency: {lat } ms')
+    return amp, lat
+
+
+def train_svm_p300(epochs):
+    # Cross-validation (Using ERPCovariances, MDM)
+    clf = make_pipeline(ERPCovariances(), MDM())
+    epochs.pick_types(eeg=True)
+    X = epochs.get_data() * 1e6  # (194, 4, 232)
+    X = X.reshape(X.shape[0], -1)  # Convert to 2D (194, ~)
+    times = epochs.times
+    y = epochs.events[:, -1]  # (194,)
+
+    cv = StratifiedShuffleSplit(
+        n_splits=10, test_size=0.25, random_state=42)
+
+    # Cross validation
+    res = cross_val_score(clf, X, y == 2,
+                          scoring='roc_auc', cv=cv, n_jobs=-1)
+
+    # Make SVM model for specifying if P300 or Non-P300
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    clf = svm.SVC()
+    clf.fit(X_train, y_train)
+
+    y_pred = clf.predict(X_test)
+    print(accuracy_score(y_test, y_pred))
+    return accuracy_score
