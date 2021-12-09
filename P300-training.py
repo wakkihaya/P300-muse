@@ -10,11 +10,8 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 import utils
 
-
-# TODO:  Compare the experiment between normal and scare.
-
 if __name__ == "__main__":
-    subject = 1
+    subject = 2
     session = "1_normal"  # {}_normal: red/blue, {}_emotion: scared/peace,
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
