@@ -20,4 +20,4 @@ filePath = "./data/subject_{}/session_{}.csv"
 save_fn = pathlib.Path(filePath.format(subject_id, session_nb))
 
 oddball_task_gui.present(duration=record_duration,
-                         eeg=eeg_device, save_fn=save_fn)
+                         eeg=eeg_device, save_fn=save_fn, targetImg='stimulus/red.jpeg', nonTargetImg='stimulus/blue.png')

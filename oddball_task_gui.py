@@ -14,7 +14,7 @@ from eegnb.stimuli import CAT_DOG
 __title__ = "Visual P300"
 
 
-def present(duration, eeg=None, save_fn=None):
+def present(duration, eeg=None, save_fn=None, targetImg="", nonTargetImg=""):
     n_trials = 2010
     iti = 0.4
     soa = 0.3
@@ -42,9 +42,9 @@ def present(duration, eeg=None, save_fn=None):
         [600, 400], monitor="testMonitor", units="deg", fullscr=False)
 
     target = load_image(
-        os.path.join(".", "stimulus/scared.jpeg"))
+        os.path.join(".", targetImg))
     nontarget = load_image(
-        os.path.join(".", "stimulus/sky.jpeg"))
+        os.path.join(".", nonTargetImg))
 
     # Show instructions
     show_instructions(duration=duration)
