@@ -1,6 +1,14 @@
 # P300-muse
 Get P300 data using Muse
 
+Here, you can
+- Run the experiment.
+- Measure your brainwaves as CSV.
+- Visualize your brainwaves
+- Train brainwaves data using SVM.
+
+## Prepare for your experiment
+Change `session` number to what you want in `visual-P300.py` and `P300-training.py`.
 ## Run
 1. Start Oddball task
 
