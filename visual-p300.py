@@ -9,8 +9,8 @@ import pathlib
 # Define some variables
 board_name = "muse2"
 experiment = "visual_p300"
-subject_id = 2
-session_nb = "2_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
+subject_id = 1
+session_nb = "4_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
 record_duration = 100
 
 eeg_device = EEG(device=board_name)
@@ -20,4 +20,4 @@ filePath = "./data/subject_{}/session_{}.csv"
 save_fn = pathlib.Path(filePath.format(subject_id, session_nb))
 
 oddball_task_gui.present(duration=record_duration,
-                         eeg=eeg_device, save_fn=save_fn, targetImg='stimulus/scared.jpeg', nonTargetImg='stimulus/sky.jpeg')
+                         eeg=eeg_device, save_fn=save_fn, targetImg='stimulus/scared_2.jpeg', nonTargetImg='stimulus/sky.jpeg')
