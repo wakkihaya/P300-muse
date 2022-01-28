@@ -31,12 +31,15 @@ if __name__ == "__main__":
 
     print(events)
 
-    epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1, tmax=0.8, baseline=None,
+    epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1,
+                    tmax=0.8, baseline=None,
                     reject={'eeg': 100e-6},
                     preload=True, verbose=False, picks=[0, 1, 2, 3])
     if epochs.events.size == 0:
         print('No epochs')
     else:
+        # See: https://mne.tools/stable/generated/mne.Epochs.html?highlight=apply_hilbert#mne.Epochs.apply_hilbert
+        epochs.apply_hilbert()
         # Show Epocs plot with events.
         epochs.plot(events=events)
 
