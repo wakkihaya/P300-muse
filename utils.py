@@ -138,7 +138,7 @@ def stream_data(eeg_data, ch_names, ch_ind,):
 
 
 def plot_conditions(epochs, conditions=OrderedDict(), ci=97.5, n_boot=1000,
-                    title='', palette=None, ylim=(-6, 6),
+                    title='', palette=None, ylim=(-11, 12),
                     diff_waveform=(1, 2)):
     """Plot ERP conditions.
     Args:
