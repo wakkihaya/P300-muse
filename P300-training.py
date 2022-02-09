@@ -11,8 +11,8 @@ from matplotlib import pyplot as plt
 import utils
 
 if __name__ == "__main__":
-    subject = 1
-    session = "6_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
+    subject = 2
+    session = "2_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
