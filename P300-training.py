@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Read raw data from muse device
     # raw = utils.connect_to_eeg_stream()
 
-    raw.plot_psd(tmax=np.inf)  # X: Frequency, Y: デシベル(dB)
+   #  raw.plot_psd(tmax=np.inf)  # X: Frequency, Y: デシベル(dB)
 
     raw.filter(1, 30, method='iir')    # Filter by 30 Hz
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # Events include the labels -> 1: Not-P300, 2: P300.
     event_id = {'Non-Target': 1, 'Target': 2}
 
-    print(events)
+    # print(events)
 
     epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1,
                     tmax=0.8, baseline=None,
