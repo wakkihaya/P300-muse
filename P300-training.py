@@ -11,8 +11,8 @@ from matplotlib import pyplot as plt
 import utils
 
 if __name__ == "__main__":
-    subject = 2
-    session = "2_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
+    subject = 1
+    session = "10_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
     # Read raw data from data set
     raw = utils.load_data(sfreq=256.,
                           subject_nb=subject, session_nb=session,
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     epochs = Epochs(raw, events=events, event_id=event_id, tmin=-0.1,
                     tmax=0.8, baseline=None,
-                    reject={'eeg': 100e-6},
+                    reject=None,
                     preload=True, verbose=False, picks=[0, 1, 2, 3])
     if epochs.events.size == 0:
         print('No epochs')
