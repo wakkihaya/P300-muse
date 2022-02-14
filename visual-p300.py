@@ -10,7 +10,7 @@ import pathlib
 board_name = "muse2"
 experiment = "visual_p300"
 subject_id = 1
-session_nb = "7_normal"  # {}_normal: red/blue, {}_emotion: scared/peace,
+session_nb = "10_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
 record_duration = 100
 
 eeg_device = EEG(device=board_name)
@@ -21,4 +21,4 @@ save_fn = pathlib.Path(filePath.format(subject_id, session_nb))
 
 
 oddball_task_gui.present(duration=record_duration,
-                         eeg=eeg_device, save_fn=save_fn, targetImg='stimulus/red.jpeg', nonTargetImg='stimulus/blue.jpeg')
+                         eeg=eeg_device, save_fn=save_fn, targetImg='stimulus/scared.jpeg', nonTargetImg='stimulus/sky.jpeg')
