@@ -10,7 +10,7 @@ import pathlib
 board_name = "muse2"
 experiment = "visual_p300"
 subject_id = 1
-session_nb = "10_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
+session_nb = "12_emotion"  # {}_normal: red/blue, {}_emotion: scared/peace,
 record_duration = 100
 
 eeg_device = EEG(device=board_name)
